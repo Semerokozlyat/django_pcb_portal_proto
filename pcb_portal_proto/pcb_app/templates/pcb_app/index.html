@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Main page</title>
+</head>
+<body>
+<ul>
+{% for link in index_page_urls %}
+    <li>
+    <a href="{% url 'pcb_app:order_list_link' %}">link to Orders</a>
+    </li>
+{% endfor %}
+</ul>
+</body>
+</html>

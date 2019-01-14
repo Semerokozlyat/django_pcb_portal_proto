@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Order List</title>
+</head>
+<body>
+
+{% if latest_orders_list %}
+<ul>
+    {% for order in latest_orders_list %}
+    <li><a href="{% url 'pcb_app:order_details_link' order.id %}">{{ order }}</a></li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>No orders are available.</p>
+{% endif %}
+
+</body>
+</html>

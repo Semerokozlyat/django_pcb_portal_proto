@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Order Details</title>
+</head>
+<body>
+<h3>{{ order }}</h3>
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+    <ul title="Existent Order Items">
+    {% for item in order.orderitempcb_set.all %}
+    <li>Order Item: {{ item.material }}</li>
+    {% endfor %}
+    </ul>
+
+<form action="{% url 'pcb_app:order_item_add_link' order.id %}" method="POST">
+    {% csrf_token %}
+    <input type="text" name="type" id="type">
+    <label for="type">Item type: </label><br>
+    <input type="text" name="quantity" id="quantity">
+    <label for="quantity">Item quantity: </label><br>
+    <input type="text" name="size" id="size">
+    <label for="size">Item size: </label><br>
+    <input type="text" name="material" id="material">
+    <label for="material">Item material: </label><br>
+    <input type="text" name="thickness" id="thickness">
+    <label for="thickness">Item thickness: </label><br>
+    <input type="text" name="color" id="color">
+    <label for="color">Item color: </label><br>
+    <input type="submit" value="Add Item">
+</form>
+</body>
+</html>

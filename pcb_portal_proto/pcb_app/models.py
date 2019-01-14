@@ -7,11 +7,11 @@ import datetime
 class Order(models.Model):
     date = models.DateTimeField('order_date', auto_now_add=True)
     currency = models.CharField('order_currency', max_length=3)
-    total_cost = models.PositiveIntegerField('order_total_cost')
+    total_cost = models.PositiveIntegerField('order_total_cost', default=0)
     delivery_country = models.CharField('order_delivery', max_length=3)
-    is_paid = models.BooleanField('order_paid')
-    is_delivered = models.BooleanField('order_delivered')
-    is_fake = models.BooleanField('order_is_fake')
+    is_paid = models.BooleanField('order_paid', default=False)
+    is_delivered = models.BooleanField('order_delivered', default=False)
+    is_fake = models.BooleanField('order_is_fake', default=False)
 
     def __str__(self):
         return "Order #%s for %s" % (self.id, self.date)
@@ -23,7 +23,7 @@ class Order(models.Model):
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     type = models.CharField('item_type', max_length=10)
-    quantity = models.SmallIntegerField('item_quantity')
+    quantity = models.SmallIntegerField('item_quantity', default=1)
 
     class Meta:
         abstract = True
