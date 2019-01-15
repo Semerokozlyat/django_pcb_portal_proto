@@ -5,12 +5,12 @@
     <title>Order Details</title>
 </head>
 <body>
-<h3>{{ order }}</h3>
+<h3>{{ order }} - {{ order.total_cost }}</h3>
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
     <ul title="Existent Order Items">
     {% for item in order.orderitempcb_set.all %}
-    <li>Order Item: {{ item.material }}</li>
+    <li>Order Item: {{ item.material }} - ${{ item.price }}</li>
     {% endfor %}
     </ul>
 
@@ -28,6 +28,8 @@
     <label for="thickness">Item thickness: </label><br>
     <input type="text" name="color" id="color">
     <label for="color">Item color: </label><br>
+    <input type="text" name="price" id="price">
+    <label for="color">Item price: </label><br>
     <input type="submit" value="Add Item">
 </form>
 </body>

@@ -24,10 +24,35 @@ def order_list(request):
 
 def order_details(request, order_id):
     order = get_object_or_404(Order, pk=order_id)
+    current_items = order.orderitempcb_set.all()
+    order.total_cost = sum([item.price for item in current_items])
+
     context = {
         'order': order,
     }
     return render(request, 'pcb_app/order_details.html', context)
+
+
+def order_create(request):
+    try:
+        print(request.POST['is_fake'])
+        new_order = Order(date=request.POST['date'],
+                          currency=request.POST['currency'],
+                          delivery_country=request.POST['delivery_country'],
+                          is_paid=request.POST['is_paid'],
+                          is_delivered=request.POST['is_delivered'],
+                          is_fake=request.POST['is_fake'],
+                          )
+        new_order.save()
+    except Exception as ex:
+        print("Error is: ", str(ex))
+        context = {
+            'error_message': 'Error on attempt to add new Order.',
+        }
+        return render(request, 'pcb_app/order_list.html', context)
+    else:
+        new_order.save()
+        return HttpResponseRedirect(reverse('pcb_app:order_list_link', args=()))
 
 
 def order_item_add(request, order_id):
@@ -40,6 +65,7 @@ def order_item_add(request, order_id):
                                       material=request.POST['material'],
                                       thickness=request.POST['thickness'],
                                       color=request.POST['color'],
+                                      price=request.POST['price'],
                                       )
     except Exception as ex:
         context = {

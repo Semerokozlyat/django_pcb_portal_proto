@@ -7,11 +7,11 @@ import datetime
 class Order(models.Model):
     date = models.DateTimeField('order_date', auto_now_add=True)
     currency = models.CharField('order_currency', max_length=3)
-    total_cost = models.PositiveIntegerField('order_total_cost', default=0)
+    total_cost = models.FloatField('order_total_cost', default=0.0)
     delivery_country = models.CharField('order_delivery', max_length=3)
-    is_paid = models.BooleanField('order_paid', default=False)
-    is_delivered = models.BooleanField('order_delivered', default=False)
-    is_fake = models.BooleanField('order_is_fake', default=False)
+    is_paid = models.CharField('order_paid', max_length=30)
+    is_delivered = models.CharField('order_delivered', max_length=30)
+    is_fake = models.CharField('order_is_fake', max_length=30)
 
     def __str__(self):
         return "Order #%s for %s" % (self.id, self.date)
@@ -34,6 +34,7 @@ class OrderItemPCB(OrderItem):
     material = models.CharField('pcb_item_material', max_length=100)
     thickness = models.FloatField('pcb_item_thickness')
     color = models.CharField('pcb_item_color', max_length=15)
+    price = models.FloatField('pcb_item_price', default=0.0)
 
     def __str__(self):
         return "Printed Circuit Board #%s colored: %s" % (self.id, self.color)

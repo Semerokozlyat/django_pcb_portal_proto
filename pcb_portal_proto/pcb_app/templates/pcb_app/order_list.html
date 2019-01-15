@@ -16,5 +16,22 @@
 <p>No orders are available.</p>
 {% endif %}
 
+<form action="{% url 'pcb_app:order_create' %}" method="POST">
+    {% csrf_token %}
+    <input type="date" name="date" id="date">
+    <label for="date">Order date: </label><br>
+    <input type="text" name="currency" id="currency">
+    <label for="currency">Order currency: </label><br>
+    <input type="text" name="delivery_country" id="delivery_country">
+    <label for="delivery_country">Order delivery country: </label><br>
+    <input type="text" name="is_paid" id="is_paid">
+    <label for="is_paid">Order is paid: </label><br>
+    <input type="text" name="is_delivered" id="is_delivered">
+    <label for="is_delivered">Order is delivered: </label><br>
+    <input type="text" name="is_fake" id="is_fake">
+    <label for="is_fake">Order is fake: </label><br>
+    <input type="submit" value="Add Order">
+</form>
+
 </body>
 </html>
