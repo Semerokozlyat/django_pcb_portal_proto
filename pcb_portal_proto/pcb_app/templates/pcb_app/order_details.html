@@ -5,7 +5,7 @@
     <title>Order Details</title>
 </head>
 <body>
-<h3>{{ order }} - {{ order.total_cost }}</h3>
+<h3>{{ order }} - ${{ order.total_cost }}</h3>
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
     <ul title="Existent Order Items">

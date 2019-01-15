@@ -39,6 +39,12 @@ class OrderItemPCB(OrderItem):
     def __str__(self):
         return "Printed Circuit Board #%s colored: %s" % (self.id, self.color)
 
+class Vendor(models.Model):
+    name = models.CharField('vendor_name', max_length=100)
+    country = models.CharField('vendor_country', max_length=100)
+    currency = models.CharField('vendor_currency', max_length=100)
+
+
 
 
 
