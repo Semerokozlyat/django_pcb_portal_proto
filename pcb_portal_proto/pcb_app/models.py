@@ -22,6 +22,7 @@ class Order(models.Model):
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    sku_id = models.CharField('item_sku', max_length=100)
     type = models.CharField('item_type', max_length=10)
     quantity = models.SmallIntegerField('item_quantity', default=1)
 
@@ -39,10 +40,40 @@ class OrderItemPCB(OrderItem):
     def __str__(self):
         return "Printed Circuit Board #%s colored: %s" % (self.id, self.color)
 
+
 class Vendor(models.Model):
     name = models.CharField('vendor_name', max_length=100)
     country = models.CharField('vendor_country', max_length=100)
     currency = models.CharField('vendor_currency', max_length=100)
+
+    def __str__(self):
+        return "Vendor: %s" % self.name
+
+
+class Sku(models.Model):
+    id = models.CharField('sku_id', max_length=10, primary_key=True, db_index=True)
+    section_name = models.CharField('sku_section_name', max_length=50)
+    type_name = models.CharField('sku_type_name', max_length=10)
+    value = models.CharField('sku_value', max_length=10)
+    description = models.CharField('sku_friendly_description', max_length=100)
+
+    def __str__(self):
+        return "SKU #%s: %s - %s (%s)" % (self.id, self.type_name, self.value, self.description)
+
+
+class VendorInventory(models.Model):
+    sku = models.ForeignKey(Sku, on_delete=models.CASCADE)
+    vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE)
+    price = models.PositiveIntegerField('inventory_sku_price', default=0)
+    reserve = models.SmallIntegerField('inventory_sku_reserve', default=0)  # may be negative = means "requested"
+    last_update_time = models.DateTimeField('inventory_sku_last_update_time', auto_now_add=True)
+
+    def __str__(self):
+        return "Inventory line: SKU %s of %s with reserve of %s" % (self.sku, self.vendor, self.reserve)
+
+
+
+
 
 
 
