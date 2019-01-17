@@ -3,7 +3,7 @@ from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.template import loader
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
-from .models import Order, OrderItemPCB
+from .models import Order, OrderItemPCB, Sku
 
 
 def index(request):
@@ -20,6 +20,16 @@ def order_list(request):
         'latest_orders_list': latest_orders_list,
     }
     return render(request, 'pcb_app/order_list.html', context)
+
+
+def order_place(request):
+    all_sku_type_names = (sku.type_name for sku in Sku.objects.all())
+    context = {
+        'sku_type_names': all_sku_type_names
+    }
+    return render(request, 'pcb_app/order_place.html', context)
+
+# ===============
 
 
 def order_details(request, order_id):

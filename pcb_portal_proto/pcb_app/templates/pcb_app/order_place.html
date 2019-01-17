@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Place an Order</title>
+</head>
+<body>
+
+{% if sku_type_names %}
+<form action="{% url 'pcb_app:link' %}" method="POST">
+    {% csrf_token %}
+    {% for sku_name in sku_type_names %}
+    <input type="text" name="{% sku_name %}" id="{% sku_name %}">
+    <label for="{% sku_name %}">{% sku_name %}: </label><br>
+</form>
+{% endif %}
+
+</body>
+</html>

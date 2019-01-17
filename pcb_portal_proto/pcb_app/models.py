@@ -53,7 +53,7 @@ class Vendor(models.Model):
 class Sku(models.Model):
     id = models.CharField('sku_id', max_length=10, primary_key=True, db_index=True)
     section_name = models.CharField('sku_section_name', max_length=50)
-    type_name = models.CharField('sku_type_name', max_length=10)
+    type_name = models.CharField('sku_type_name', max_length=10, unique=True)
     value = models.CharField('sku_value', max_length=10)
     description = models.CharField('sku_friendly_description', max_length=100)
 
